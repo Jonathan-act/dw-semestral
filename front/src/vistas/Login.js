@@ -3,10 +3,10 @@ import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
+//import FormControlLabel from '@material-ui/core/FormControlLabel';
+//import Checkbox from '@material-ui/core/Checkbox';
 import Link from '@material-ui/core/Link';
-import Grid from '@material-ui/core/Grid';
+//import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
@@ -14,8 +14,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { useForm } from 'react-hook-form';
 import axios from 'axios';
-
-import Collapse from '@material-ui/core/Collapse';
+//import Collapse from '@material-ui/core/Collapse';
 function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
@@ -49,9 +48,6 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-
-
-
 const SignIn = ({
     
 }) => {
@@ -77,7 +73,7 @@ const SignIn = ({
           (response) => {
              console.log(response.data);
             
-              if(response.data.mensaje=='correcto'){
+              if(response.data.mensaje==='correcto'){
 
 
                 localStorage.setItem('TOKEN_APP_TALLER',response.data.token)
@@ -94,7 +90,7 @@ const SignIn = ({
             
             
             if (err.response) {
-                if(err.response.status==401){
+                if(err.response.status===401){
                     let motivo= err.response.data.mensaje;
                     alert(`No autorizado:${motivo}`)
                 }

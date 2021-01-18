@@ -8,6 +8,8 @@ import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import Autor from './Autor'
 import Libro from './libro';
+import Usuario from './usuario';
+import Prestamo from './Prestamo';
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -53,6 +55,7 @@ export default function MenuTabs() {
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
 
+  /*
   useEffect(() => {
     const token = localStorage.getItem('TOKEN_APP_TALLER');
     if(token==null)
@@ -60,6 +63,7 @@ export default function MenuTabs() {
       window.location='/';
     }
   }, []);
+  */
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -69,24 +73,26 @@ export default function MenuTabs() {
     <div className={classes.root}>
       <AppBar position="static">
         <Tabs value={value} onChange={handleChange} aria-label="simple tabs example">
-          <Tab label="Item One" {...a11yProps(0)} />
-          <Tab label="Autor" {...a11yProps(1)} />
-          <Tab label="Item Three" {...a11yProps(2)} />
-          <Tab label="Nuevo" {...a11yProps(3)} />
+          <Tab label="Autores" {...a11yProps(0)} />
+          <Tab label="Libros" {...a11yProps(1)} />
+          <Tab label="Usuarios" {...a11yProps(2)} />
+          <Tab label="Prestamos" {...a11yProps(3)} />
         </Tabs>
       </AppBar>
       <TabPanel value={value} index={0}>
-    <Libro/>
-      </TabPanel>
-      <TabPanel value={value} index={1}>
         <Autor/>
       </TabPanel>
-      <TabPanel value={value} index={2}>
-        Item Three
+
+      <TabPanel value={value} index={1}>
+        <Libro/>
       </TabPanel>
 
+      <TabPanel value={value} index={2}>
+        <Usuario/>
+      </TabPanel>
+  
       <TabPanel value={value} index={3}>
-       Aqui va a ir el menu nuevo
+        <Prestamo/>
       </TabPanel>
     </div>
   );

@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import Avatar from '@material-ui/core/Avatar';
+//import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
-import Link from '@material-ui/core/Link';
+//import FormControlLabel from '@material-ui/core/FormControlLabel';
+//import Checkbox from '@material-ui/core/Checkbox';
+//import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
-import Box from '@material-ui/core/Box';
-import Typography from '@material-ui/core/Typography';
+//import Box from '@material-ui/core/Box';
+//import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { useForm } from 'react-hook-form';
@@ -45,23 +45,21 @@ export default function Autor() {
   const classes = useStyles();
 
   const { register, handleSubmit, errors, getValues, setValue, reset } = useForm(
-    { defaultValues: { nombre: "Nombre *", apellido: "Apellido *", edad: "Edad *", rut: "Rut *" } });
+    { defaultValues: { Nombre: "Nombre *", Autor: "Autor *"} });
 
-  const [contador, setContador] = useState(0)
-  const [autores, setAutores] = useState([])
+  const [libros, setLibros] = useState([])
   const [accion, setAccion] = useState("Guardar")
-  const [idAutor, setIdAutor] = useState(null);
+  const [idLibro, setidLibro] = useState(null);
 
   useEffect(() => {
-    cargarAutor();
+    cargarLibros();
   }, []);
 
   const seleccionar = (item) => {
     setValue("nombre", item.nombre)
-    setValue("apellido", item.apellido)
-    setValue("edad", item.edad)
-    setValue("rut", item.rut)
-    setIdAutor(item._id)
+    setValue("autor", item.autor)
+    setValue("codigo", item.codigo)
+    setidLibro(item._id)
     setAccion("Modificar")
 
 
@@ -89,8 +87,8 @@ export default function Autor() {
       field: 'nombre'
     },
     {
-      name: 'Apellido',
-      field: 'apellido'
+      name: 'Autor',
+      field: 'autor'
     }
 
 
@@ -122,7 +120,7 @@ export default function Autor() {
   }
   const onSubmit = data => {
 
-    if (accion == "Guardar") {
+    if (accion === "Guardar") {
       axios
         .post("http://localhost:9000/api/autor", data, {
           headers: {
@@ -131,9 +129,9 @@ export default function Autor() {
         })
         .then(
           (response) => {
-            if (response.status == 200) {
+            if (response.status === 200) {
               alert("Registro ok")
-              cargarAutor();
+              cargarLibros();
               reset();
             }
           },
@@ -154,16 +152,16 @@ export default function Autor() {
           console.log(error);
         });
     }
-    if (accion == "Modificar") {
+    if (accion === "Modificar") {
       axios
-        .put("http://localhost:9000/api/autor/" + idAutor, data)
+        .put("http://localhost:9000/api/autor/" + idLibro, data)
         .then(
           (response) => {
-            if (response.status == 200) {
+            if (response.status === 200) {
               alert("Modificado")
-              cargarAutor();
+              cargarLibros();
               reset();
-              setIdAutor(null)
+              setidLibro(null)
               setAccion("Guardar")
               console.log(response.data)
             }
@@ -189,19 +187,19 @@ export default function Autor() {
   }
 
   const eliminar = () => {
-    if (idAutor == null) {
+    if (idLibro === null) {
       alert("Debe seleccionar un autor")
       return
     }
     axios
-      .delete("http://localhost:9000/api/autor/" + idAutor)
+      .delete("http://localhost:9000/api/libro/" + idLibro)
       .then(
         (response) => {
-          if (response.status == 200) {
+          if (response.status === 200) {
 
-            cargarAutor();
+            cargarLibros();
             reset();
-            setIdAutor(null)
+            setidLibro(null)
             setAccion("Guardar")
             console.log(response.data)
             alert("Eliminado")
@@ -224,35 +222,22 @@ export default function Autor() {
         console.log(error);
       });
   }
-  const cargarAutor = async () => {
+  const cargarLibros = async () => {
     // const { data } = await axios.get('/api/zona/listar');
 
-    const { data } = await axios.get("http://localhost:9000/api/autor");
+    const { data } = await axios.get("http://localhost:9000/api/libro");
 
-    setAutores(data.autor);
+    setLibros(data.libro);
 
 
   };
-  function click2() {
-    setContador(contador + 1);
-  }
+
   return (
     <Container component="main" maxWidth="md">
       <CssBaseline />
       <div className={classes.paper}>
-        <Button
-          type="button"
-          fullWidth
-          variant="contained"
+        
 
-          className={classes.submit}
-          onClick={() => { reset(); setAccion("Guardar"); setIdAutor(null) }}
-        >
-          Nuevo
-          </Button>
-        <Typography component="h1" variant="h5">
-          Autor - Contador: {contador}
-        </Typography>
         <form className={classes.form} onSubmit={handleSubmit(onSubmit)}>
           <Grid container spacing={2}>
             <Grid item xs={12} sm={6}>
@@ -262,7 +247,6 @@ export default function Autor() {
                 variant="outlined"
                 required
                 fullWidth
-            
                 label="Nombre"
                 autoFocus
                 inputRef={register}
@@ -273,26 +257,14 @@ export default function Autor() {
                 variant="outlined"
                 required
                 fullWidth
-                id="lastName"
-                label="Last Name"
-                name="apellido"
-                autoComplete="lname"
+                id="Autor"
+                label="Autor"
+                name="Autor"
+                autoComplete="Autor"
                 inputRef={register}
               />
             </Grid>
-            <Grid item xs={12}>
-              <Select
-                labelId="demo-customized-select-label"
-                id="demo-customized-select"
-      
-              >
-                <MenuItem value="">
-                  <em>None</em>
-                </MenuItem>
-                <MenuItem value={10}>Ten</MenuItem>
-                <MenuItem value={20}>Twenty</MenuItem>
-                <MenuItem value={30}>Thirty</MenuItem>
-              </Select>
+            <Grid item xs={12}>          
               
             </Grid>
             <Grid item xs={12}>
@@ -300,16 +272,17 @@ export default function Autor() {
                 variant="outlined"
                 required
                 fullWidth
-                name="rut"
-                label="rut"
-                id="rut"
-                autoComplete="rut"
+                name="codigo"
+                label="Código"
+                id="codigo"
+                autoComplete="Código"
                 inputRef={register}
 
               />
             </Grid>
 
           </Grid>
+          
           <Button
             type="submit"
             fullWidth
@@ -329,11 +302,21 @@ export default function Autor() {
           >
             Eliminar
           </Button>
-          <Grid container spacing={1}>
+          <Button
+          type="button"
+          fullWidth
+          variant="contained"
+
+          className={classes.submit}
+          onClick={() => { reset(); setAccion("Guardar"); setidLibro(null) }}
+          >
+          Limpiar
+        </Button>
+          <Grid spacing={1}>
             <MaterialDatatable
 
-              title={"Autores"}
-              data={autores}
+              title={"Libros"}
+              data={libros}
               columns={columns}
               options={options}
             />
@@ -341,7 +324,6 @@ export default function Autor() {
 
 
         </form>
-
 
       </div>
 
