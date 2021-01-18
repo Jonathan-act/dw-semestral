@@ -58,7 +58,7 @@ export default function Autor() {
 
   const seleccionar = (item) =>{
     setValue("persona",item.persona)
-    setValue("autor",item.autor)
+    setValue("fecha",item.fecha)
     //setValue("fecha",item.fecha)
     setIdAutor(item._id)
     setAccion("Modificar")
@@ -84,12 +84,12 @@ export default function Autor() {
       },
     },
     {
-      name: 'Persona',
-      field: 'persona'
+      name: 'Nombre',
+      field: 'nombre'
     },
     {
-      name: 'Libro',
-      field: 'libro'
+      name: 'Fecha',
+      field: 'fecha'
     }
   
   ];
@@ -158,11 +158,10 @@ export default function Autor() {
  
 
   const cargarPrestamo = async () => {
-    // const { data } = await axios.get('/api/zona/listar');
 
     const { data } = await axios.get("http://localhost:9000/api/prestamo");
-    
-    setAutores(data.prestamo);
+    console.log(data);
+    setPrestamos(data.resultado);
   };
 
   const cargarPersona = async () => {

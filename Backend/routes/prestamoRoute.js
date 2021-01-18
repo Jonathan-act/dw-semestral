@@ -11,7 +11,7 @@ var api = express.Router();
  
 //  Guardar Autos
 api.post('/prestamo', prestamo.guardarPrestamo);
-api.get('/prestamo',auth.isAuth, prestamo.listar);
+api.get('/prestamo',prestamo.listar);
 api.get('/prestamopersona', prestamo.prestamosPersona);
 api.get('/prestamopersona2', prestamo.prestamosPersona2);
 
